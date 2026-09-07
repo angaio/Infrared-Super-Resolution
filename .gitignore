@@ -1,0 +1,63 @@
+# =============================================================================
+# .gitignore for the PUBLIC SrDemoQt repository.
+#
+# Publishes: the Qt UI in full source (SrDemoApp), SrCoreLib's public header,
+# the top-level CMakeLists, the README with its images (docs/images/), and a
+# runnable bin/ (prebuilt SrCore + runtime DLLs + the sample clip).
+# NOT published: the algorithm source, the model blobs and the packing tool,
+# build output, debug symbols, and runtime recordings.
+# =============================================================================
+
+# ---- SrCoreLib: keep only include/, exclude the implementation --------------
+# (SrCoreLib/CMakeLists.txt references src/ and is unused in prebuilt mode.)
+/SrCoreLib/src/
+/SrCoreLib/res/
+/SrCoreLib/CMakeLists.txt
+/SrCoreLib/_src_hidden/
+
+# ---- model packing tool and raw models (internal only) ----------------------
+/tools/
+/models/
+
+# ---- build directories & CMake scratch --------------------------------------
+build/
+build*/
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/*_autogen/
+*.ninja
+.ninja_deps
+.ninja_log
+rules.ninja
+
+# ---- IDE / editor -----------------------------------------------------------
+.vs/
+.vscode/
+*.user
+*.sln
+*.vcxproj*
+# editor pasted-image cache; the real README images live in docs/images/
+/image/
+
+# ---- compiler / linker artifacts & debug symbols (never publish) ------------
+*.obj
+*.o
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.log
+
+# ---- version control of the origin tree -------------------------------------
+.svn/
+
+# =============================================================================
+# bin/ is published so the demo runs out of the box. Excluded from it:
+#   - debug symbols (*.pdb / *.exp / *.ilk) — handled by the patterns above
+#   - runtime recordings
+#   - the old OpenCV 4.5.1 duplicate DLLs (only the 4.11 build is used)
+# =============================================================================
+/bin/record/
+/bin/opencv_videoio_ffmpeg451_64.dll
+/bin/opencv_videoio_msmf451_64.dll
